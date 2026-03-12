@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medhā Health — Intelligence that travels with you</title>
+<meta name="description" content="Medhā is reimagining how healthcare records move across India. medhahealth.in">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --ink:    #06101C;
+  --deep:   #0A1828;
+  --panel:  #0F2035;
+  --rim:    #1A3050;
+  --blue:   #1458D6;
+  --az:     #2B88F0;
+  --sky:    #60AAFF;
+  --gold:   #C4913A;
+  --gl:     #E2B458;
+  --cream:  #F5EFE6;
+  --white:  #EEF4FF;
+  --muted:  #4A6885;
+  --t2:     #7090B0;
+  --t3:     #A8C0D8;
+  --line:   rgba(42,136,240,.12);
+  --line2:  rgba(42,136,240,.22);
+}
+
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--ink);
+  color:var(--white);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* Custom cursor */
+.cursor{
+  position:fixed;width:8px;height:8px;
+  background:var(--az);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s,background .2s;
+  mix-blend-mode:screen;
+}
+.cursor-ring{
+  position:fixed;width:32px;height:32px;
+  border:1px solid rgba(42,136,240,.4);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .18s ease,width .2s,height .2s,border-color .2s;
+}
+body:hover .cursor{opacity:1;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--rim);border-radius:2px;}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:0 60px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(6,16,28,.85);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(24px);
+}
+.nav-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:400;
+  color:var(--white);letter-spacing:.01em;
+  text-decoration:none;
+}
+.nav-brand em{color:var(--gl);font-style:italic;}
+.nav-brand span{
+  font-family:'DM Mono',monospace;
+  font-size:9px;color:var(--muted);
+  letter-spacing:.12em;text-transform:uppercase;
+  margin-left:6px;vertical-align:middle;
+}
+.nav-links{display:flex;align-items:center;gap:36px;}
+.nav-links a{
+  font-size:13px;font-weight:400;color:var(--t2);
+  text-decoration:none;transition:color .2s;
+  letter-spacing:.02em;
+}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{
+  padding:9px 22px;border-radius:6px;
+  background:transparent;border:1px solid var(--line2);
+  color:var(--az) !important;font-size:13px !important;
+  transition:all .25s !important;
+}
+.nav-cta:hover{background:rgba(42,136,240,.1) !important;border-color:var(--az) !important;color:var(--white) !important;}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:flex-start;
+  padding:120px 60px 80px;
+  position:relative;overflow:hidden;
+}
+
+/* Ambient background */
+.hero::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 75% 40%, rgba(20,88,214,.14) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(196,145,58,.06) 0%, transparent 55%);
+}
+
+/* Grid */
+.hero::after{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(42,136,240,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(42,136,240,.03) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);
+}
+
+.hero-inner{position:relative;z-index:1;max-width:820px;}
+
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:20px;
+  border:1px solid var(--line2);
+  background:rgba(42,136,240,.06);
+  margin-bottom:32px;
+  animation:fadeUp .6s ease both;
+}
+.hero-tag-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--az);
+  animation:pulse 2.4s ease infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+.hero-tag span{
+  font-family:'DM Mono',monospace;
+  font-size:10px;color:var(--az);letter-spacing:.14em;text-transform:uppercase;
+}
+
+h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(48px,6.5vw,88px);
+  font-weight:300;line-height:1.04;
+  letter-spacing:-.01em;
+  margin-bottom:28px;
+  animation:fadeUp .7s .1s ease both;
+}
+h1 em{color:var(--gl);font-style:italic;}
+h1 .line2{
+  display:block;
+  background:linear-gradient(90deg,var(--white),var(--t3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+.hero-sub{
+  font-size:17px;font-weight:300;color:var(--t2);
+  line-height:1.8;max-width:520px;
+  margin-bottom:44px;
+  animation:fadeUp .7s .2s ease both;
+}
+
+.hero-actions{
+  display:flex;gap:14px;align-items:center;
+  animation:fadeUp .7s .3s ease both;
+}
+.btn-primary{
+  padding:14px 32px;border-radius:8px;
+  background:var(--blue);color:var(--white);
+  font-size:14px;font-weight:500;
+  text-decoration:none;border:none;cursor:none;
+  transition:all .25s;letter-spacing:.01em;
+  position:relative;overflow:hidden;
+}
+.btn-primary::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.08),transparent);
+}
+.btn-primary:hover{background:#1A6AEA;transform:translateY(-2px);box-shadow:0 12px 32px rgba(20,88,214,.35);}
+.btn-secondary{
+  padding:14px 28px;border-radius:8px;
+  background:transparent;color:var(--t3);
+  font-size:14px;font-weight:400;
+  text-decoration:none;border:1px solid var(--line);
+  transition:all .25s;letter-spacing:.01em;cursor:none;
+}
+.btn-secondary:hover{border-color:var(--line2);color:var(--white);}
+
+/* Floating card visual */
+.hero-visual{
+  position:absolute;right:60px;top:50%;
+  transform:translateY(-50%);
+  z-index:1;
+  animation:floatCard 6s ease-in-out infinite, fadeUp .8s .4s ease both;
+}
+@keyframes floatCard{
+  0%,100%{transform:translateY(-50%) rotate(-2deg);}
+  50%{transform:translateY(calc(-50% - 18px)) rotate(1deg);}
+}
+.health-card{
+  width:300px;height:188px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#0F2035 0%,#152840 50%,#0A1828 100%);
+  border:1px solid rgba(42,136,240,.25);
+  padding:22px 24px;
+  box-shadow:0 40px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.03),inset 0 1px 0 rgba(255,255,255,.06);
+  position:relative;overflow:hidden;
+}
+.health-card::before{
+  content:'';position:absolute;
+  top:-40px;right:-40px;
+  width:180px;height:180px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(20,88,214,.2),transparent 70%);
+}
+.card-chip{
+  width:36px;height:28px;border-radius:5px;
+  background:linear-gradient(135deg,var(--gold),var(--gl));
+  margin-bottom:20px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:5px;
+}
+.card-chip-line{background:rgba(0,0,0,.2);border-radius:1px;}
+.card-nfc{
+  position:absolute;top:22px;right:22px;
+  width:28px;height:28px;
+  display:flex;align-items:center;justify-content:center;
+}
+.nfc-arc{
+  position:absolute;border-radius:50%;
+  border:1.5px solid rgba(42,136,240,.5);
+}
+.nfc-arc:nth-child(1){width:10px;height:10px;}
+.nfc-arc:nth-child(2){width:18px;height:18px;opacity:.6;}
+.nfc-arc:nth-child(3){width:26px;height:26px;opacity:.3;}
+.card-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;color:var(--white);letter-spacing:.06em;
+  margin-bottom:3px;
+}
+.card-sub{font-family:'DM Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.14em;}
+.card-brand{
+  position:absolute;bottom:18px;right:20px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;font-weight:600;color:rgba(255,255,255,.2);
+  letter-spacing:.1em;
+}
+.card-brand em{color:rgba(226,180,88,.3);font-style:italic;}
+
+/* Glow orbs behind card */
+.orb{
+  position:absolute;border-radius:50%;pointer-events:none;z-index:0;
+  filter:blur(60px);opacity:.4;
+}
+.orb1{width:300px;height:300px;background:var(--blue);right:-50px;top:20%;}
+.orb2{width:200px;height:200px;background:var(--gold);right:200px;bottom:15%;}
+
+/* ─── STATS STRIP ─── */
+.stats-strip{
+  padding:48px 60px;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  background:rgba(15,32,53,.4);
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:24px;
+}
+.stat-item{text-align:center;animation:fadeUp .6s ease both;}
+.stat-item:nth-child(2){animation-delay:.07s;}
+.stat-item:nth-child(3){animation-delay:.14s;}
+.stat-item:nth-child(4){animation-delay:.21s;}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;font-weight:300;color:var(--az);
+  line-height:1;margin-bottom:6px;
+}
+.stat-num em{color:var(--gl);}
+.stat-lbl{font-size:12px;color:var(--muted);letter-spacing:.04em;line-height:1.5;}
+
+/* ─── SECTION COMMON ─── */
+section{padding:100px 60px;position:relative;}
+.section-tag{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--az);letter-spacing:.2em;text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;margin-bottom:16px;
+}
+.section-tag::before{content:'';width:24px;height:1px;background:var(--az);opacity:.5;}
+h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(34px,4vw,52px);font-weight:300;
+  line-height:1.1;margin-bottom:16px;
+}
+h2 em{color:var(--gl);font-style:italic;}
+.section-sub{
+  font-size:15px;font-weight:300;color:var(--t2);
+  line-height:1.85;max-width:560px;margin-bottom:56px;
+}
+
+/* ─── PROBLEM ─── */
+.problem{background:var(--deep);}
+.problem-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:16px;max-width:860px;
+}
+.prob-card{
+  padding:28px;border-radius:14px;
+  background:rgba(15,32,53,.8);
+  border:1px solid var(--line);
+  transition:border-color .25s,transform .25s;
+}
+.prob-card:hover{border-color:var(--line2);transform:translateY(-3px);}
+.prob-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;color:var(--az);line-height:1;
+  margin-bottom:8px;
+}
+.prob-num.gold{color:var(--gl);}
+.prob-title{font-size:14px;font-weight:500;color:var(--white);margin-bottom:6px;}
+.prob-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+
+/* ─── WHAT WE'RE BUILDING ─── */
+.building{
+  background:var(--ink);
+}
+.features-list{
+  display:flex;flex-direction:column;gap:0;
+  max-width:720px;
+}
+.feat-row{
+  display:flex;align-items:flex-start;gap:24px;
+  padding:28px 0;
+  border-bottom:1px solid var(--line);
+  transition:background .2s;
+}
+.feat-row:first-child{border-top:1px solid var(--line);}
+.feat-num{
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:.1em;
+  flex-shrink:0;width:28px;padding-top:4px;
+}
+.feat-body{}
+.feat-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;color:var(--white);
+  margin-bottom:6px;
+}
+.feat-desc{font-size:13px;color:var(--t2);line-height:1.75;}
+
+/* ─── TEAM ─── */
+.team{
+  background:var(--deep);
+  border-top:1px solid var(--line);
+}
+.team-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:20px;max-width:680px;
+}
+.team-card{
+  padding:32px;border-radius:16px;
+  background:rgba(15,32,53,.6);
+  border:1px solid var(--line);
+  transition:border-color .25s,transform .25s;
+  position:relative;overflow:hidden;
+}
+.team-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+}
+.team-card:nth-child(1)::before{background:linear-gradient(90deg,var(--blue),var(--az));}
+.team-card:nth-child(2)::before{background:linear-gradient(90deg,var(--gold),var(--gl));}
+.team-card:hover{border-color:var(--line2);transform:translateY(-4px);}
+.team-avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--az));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;color:var(--white);font-weight:300;
+  margin-bottom:18px;
+}
+.team-avatar.gold{background:linear-gradient(135deg,var(--gold),var(--gl));}
+.team-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:400;color:var(--white);
+  margin-bottom:4px;
+}
+.team-role{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--az);letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:14px;
+}
+.team-role.gold{color:var(--gl);}
+.team-bio{font-size:12px;color:var(--muted);line-height:1.75;}
+
+/* ─── EARLY ACCESS ─── */
+.access{
+  background:var(--ink);
+  text-align:center;
+  padding:120px 60px;
+}
+.access-inner{max-width:560px;margin:0 auto;}
+.access h2{margin-bottom:14px;}
+.access .section-sub{margin:0 auto 40px;text-align:center;}
+.access-form{
+  display:flex;gap:10px;
+  background:rgba(15,32,53,.8);
+  border:1px solid var(--line2);
+  border-radius:10px;padding:6px 6px 6px 20px;
+  max-width:480px;margin:0 auto 20px;
+}
+.access-input{
+  flex:1;background:transparent;border:none;outline:none;
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  color:var(--white);
+}
+.access-input::placeholder{color:var(--muted);}
+.access-btn{
+  padding:11px 22px;border-radius:6px;
+  background:var(--blue);color:var(--white);
+  font-size:13px;font-weight:500;
+  border:none;cursor:none;
+  transition:all .2s;white-space:nowrap;
+}
+.access-btn:hover{background:#1A6AEA;}
+.access-note{font-size:11px;color:var(--muted);}
+.access-note a{color:var(--t2);text-decoration:none;}
+
+/* ─── FOOTER ─── */
+footer{
+  padding:40px 60px;
+  border-top:1px solid var(--line);
+  background:var(--deep);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;color:var(--white);
+}
+.footer-brand em{color:var(--gl);font-style:italic;}
+.footer-meta{font-size:11px;color:var(--muted);}
+.footer-meta a{color:var(--t2);text-decoration:none;}
+.footer-meta a:hover{color:var(--white);}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.reveal{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .65s ease,transform .65s ease;
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .hero-visual{display:none;}
+  nav{padding:0 24px;}
+  .hero,.stats-strip,section,.access,footer{padding-left:24px;padding-right:24px;}
+  .stats-strip{grid-template-columns:repeat(2,1fr);}
+  .problem-grid,.team-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">Me<em>dhā</em> <span>medhahealth.in</span></a>
+  <div class="nav-links">
+    <a href="#problem">The Problem</a>
+    <a href="#building">What We're Building</a>
+    <a href="#team">Team</a>
+    <a href="#access" class="nav-cta">Request Early Access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <div class="hero-tag-dot"></div>
+      <span>Now in stealth · medhahealth.in</span>
+    </div>
+
+    <h1>
+      Your health record,<br>
+      <em>everywhere</em> you go.
+      <span class="line2">Instantly.</span>
+    </h1>
+
+    <p class="hero-sub">
+      We're building the infrastructure for health intelligence across India —
+      so any doctor, anywhere, can understand your complete medical history
+      in seconds. No app. No internet. No paperwork.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#access" class="btn-primary">Request Early Access</a>
+      <a href="#building" class="btn-secondary">See How It Works →</a>
+    </div>
+  </div>
+
+  <!-- Floating card -->
+  <div class="hero-visual">
+    <div class="health-card">
+      <div class="card-chip">
+        <div class="card-chip-line"></div><div class="card-chip-line"></div><div class="card-chip-line"></div>
+        <div class="card-chip-line"></div><div class="card-chip-line"></div><div class="card-chip-line"></div>
+      </div>
+      <div class="card-nfc">
+        <div class="nfc-arc"></div>
+        <div class="nfc-arc"></div>
+        <div class="nfc-arc"></div>
+      </div>
+      <div class="card-name">MEDHĀ HEALTH</div>
+      <div class="card-sub">SMART HEALTH CARD · ABDM LINKED</div>
+      <div class="card-brand">Me<em>dhā</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item reveal">
+    <div class="stat-num">72<em>%</em></div>
+    <div class="stat-lbl">of patients arrive at hospitals<br>with zero prior records</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">250<em>K</em></div>
+    <div class="stat-lbl">deaths annually from<br>preventable medical errors</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num">799<em>M+</em></div>
+    <div class="stat-lbl">ABHA health IDs<br>already issued in India</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num"><3<em>s</em></div>
+    <div class="stat-lbl">our target for full<br>medical summary delivery</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="section-tag">The Problem</div>
+  <h2>India's health data is<br><em>fragmented, lost, and invisible.</em></h2>
+  <p class="section-sub">Every hospital visit starts from zero. Doctors make decisions without context. Patients repeat the same story — again and again.</p>
+
+  <div class="problem-grid">
+    <div class="prob-card reveal">
+      <div class="prob-num">₹15,000</div>
+      <div class="prob-title">Wasted per patient on duplicate tests</div>
+      <div class="prob-desc">Doctors re-order labs and scans already done at previous hospitals because there is no way to access prior results.</div>
+    </div>
+    <div class="prob-card reveal">
+      <div class="prob-num gold">0</div>
+      <div class="prob-title">Records available in most emergencies</div>
+      <div class="prob-desc">When a patient arrives unconscious, the treating team has no allergy list, no active medication history, no chronic condition context.</div>
+    </div>
+    <div class="prob-card reveal">
+      <div class="prob-num">4.18<em style="font-size:22px;color:var(--t2)">L+</em></div>
+      <div class="prob-title">Facilities with disconnected systems</div>
+      <div class="prob-desc">Clinics, hospitals, and labs across India operate in isolation. A record created in one system is invisible to every other.</div>
+    </div>
+    <div class="prob-card reveal">
+      <div class="prob-num gold">₹80K<em style="font-size:18px;color:var(--t2)">Cr</em></div>
+      <div class="prob-title">In health subsidies leak every year</div>
+      <div class="prob-desc">Government health schemes lose vast sums to fraud and misrouting. Benefits meant for patients never reach them.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILDING -->
+<section class="building" id="building">
+  <div class="section-tag">What We're Building</div>
+  <h2>A new layer of<br><em>health intelligence</em> for India.</h2>
+  <p class="section-sub">We're not building another health app. We're building the infrastructure layer that makes every hospital smarter the moment a patient walks in.</p>
+
+  <div class="features-list">
+    <div class="feat-row reveal">
+      <div class="feat-num">01</div>
+      <div class="feat-body">
+        <div class="feat-title">One card. Every hospital.</div>
+        <div class="feat-desc">A physical smart card that carries your health identity — tap it at any connected facility and your complete medical context is available to your care team, instantly. No phone required. Works without internet.</div>
+      </div>
+    </div>
+    <div class="feat-row reveal">
+      <div class="feat-num">02</div>
+      <div class="feat-body">
+        <div class="feat-title">AI that understands your history</div>
+        <div class="feat-desc">Our clinical AI processes years of medical records and surfaces what matters most for the current visit — conditions, medications, alerts — in a format doctors can act on in seconds, not hours.</div>
+      </div>
+    </div>
+    <div class="feat-row reveal">
+      <div class="feat-num">03</div>
+      <div class="feat-body">
+        <div class="feat-title">Built for India's health ecosystem</div>
+        <div class="feat-desc">Fully compliant with ABDM and FHIR R4 standards. Designed to work with India's existing hospital management systems from day one — no rip-and-replace required.</div>
+      </div>
+    </div>
+    <div class="feat-row reveal">
+      <div class="feat-num">04</div>
+      <div class="feat-body">
+        <div class="feat-title">Health benefits that can't be stolen</div>
+        <div class="feat-desc">A programmable wallet that routes government health subsidies directly to verified facilities via smart contracts — eliminating the leakage, fraud, and delays that cost patients and the state every year.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="section-tag">The Team</div>
+  <h2>Built by people who<br><em>understand the problem.</em></h2>
+  <p class="section-sub">We started with two patents and a clear belief: India deserves a health infrastructure that actually works for patients.</p>
+
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-avatar">AK</div>
+      <div class="team-name">Abhishek Kumar</div>
+      <div class="team-role">Founder & CEO</div>
+      <div class="team-bio">Driving Medhā's vision, product strategy, and go-to-market. Built the foundational IP behind the platform — including two patents on smart health card systems and AI-powered clinical summarisation.</div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar gold">RS</div>
+      <div class="team-name">Rohit Soni</div>
+      <div class="team-role gold">Co-Founder & CTO</div>
+      <div class="team-bio">Leading Medhā's engineering and technical architecture. Overseeing the development of our NFC hardware stack, blockchain infrastructure, and AI inference pipeline that powers the 3-second summary experience.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;padding:20px 24px;border-radius:10px;border:1px solid var(--line);background:rgba(15,32,53,.4);max-width:680px;" class="reveal">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--az);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;">IP & Credentials</div>
+    <div style="font-size:13px;color:var(--t2);line-height:1.75;">2  patents from Chandigarh University · ABDM-compliant architecture · Built on Hyperledger Fabric & FHIR R4 · Incubated at CU-TBI</div>
+  </div>
+</section>
+
+<!-- EARLY ACCESS -->
+<section class="access" id="access">
+  <div class="access-inner">
+    <div class="section-tag" style="justify-content:center;margin-bottom:14px;">
+      <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--az);letter-spacing:.2em;">Early Access</span>
+    </div>
+    <h2 style="text-align:center;">Be among the first<br>to experience <em>Medhā.</em></h2>
+    <p class="section-sub" style="text-align:center;margin-left:auto;margin-right:auto;">We're onboarding our first hospitals and patients in Bihar. If you're a hospital, clinic, or healthcare institution — we'd like to hear from you.</p>
+
+    <div class="access-form">
+      <input class="access-input" type="email" placeholder="Enter your email or hospital name">
+      <button class="access-btn">Request Access</button>
+    </div>
+    <p class="access-note">
+      For hospital partnerships & investor enquiries —
+      <a href="mailto:medhahealthcard@gmail.com">medhahealthcard@gmail.com</a>
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">Me<em>dhā</em> Health Intelligence</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;">medhahealth.in · Mohali, Punjab · 2026</div>
+  </div>
+  <div class="footer-meta" style="text-align:right;">
+    <div>© 2026 Medhā Health Intelligence Pvt. Ltd.</div>
+    <div style="margin-top:4px;">
+      <a href="mailto:medhahealthcard@gmail.com">medhahealthcard@gmail.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx+'px';
+  cursor.style.top = my+'px';
+});
+
+function animateRing(){
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx+'px';
+  ring.style.top = ry+'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a,button,.btn-primary,.btn-secondary').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+    ring.style.width = '48px'; ring.style.height = '48px';
+    ring.style.borderColor = 'rgba(42,136,240,.6)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.width = '32px'; ring.style.height = '32px';
+    ring.style.borderColor = 'rgba(42,136,240,.4)';
+  });
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Form
+document.querySelector('.access-btn').addEventListener('click', function(){
+  const input = document.querySelector('.access-input');
+  if(input.value.trim()){
+    this.textContent = '✓ Registered';
+    this.style.background = '#18A855';
+    input.value = '';
+    input.placeholder = "You're on the list. We'll be in touch.";
+  }
+});
+</script>
+</body>
+</html>
